@@ -1,0 +1,1200 @@
+<!DOCTYPE html> 
+<html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>MindSpark</title>
+  <style>  
+:root{  
+  --bg:#020617;  
+  --card:#020617;  
+  --border:#1e293b;  
+  --text:#e5e7eb;  
+  --muted:#94a3b8;  
+  --accent:#38bdf8;  
+  --streak:#f97316;  
+}  
+  
+*{box-sizing:border-box;font-family:system-ui;}  
+body{margin:0;background:var(--bg);color:var(--text);}  
+  
+/* HEADER */  
+header{  
+  display:flex;  
+  justify-content:space-between;  
+  align-items:center;  
+  padding:14px 16px;  
+  border-bottom:1px solid var(--border);  
+}  
+  
+/* SECTIONS */  
+section{  
+  display:none;  
+  padding:16px;  
+  padding-bottom:90px;  
+}  
+section.active{display:block;}  
+  
+/* CARD */  
+.card{  
+  border:1px solid var(--border);  
+  border-radius:18px;  
+  padding:16px;  
+  margin-bottom:16px;  
+}  
+  
+/* TEXT */  
+h3{margin:0 0 10px;}  
+p{margin:6px 0;color:var(--muted);}  
+  
+/* INPUTS */  
+input, select{  
+  width:100%;  
+  background:var(--bg);  
+  border:1px solid var(--border);  
+  color:var(--text);  
+  padding:10px 12px;  
+  border-radius:12px;  
+  font-size:14px;  
+}  
+  
+/* BUTTON */  
+button{  
+  background:var(--bg);  
+  border:1px solid var(--border);  
+  color:var(--text);  
+  padding:12px;  
+  border-radius:14px;  
+  font-size:14px;  
+  cursor:pointer;  
+}  
+  
+/* NAV */  
+nav{  
+  position:fixed;  
+  bottom:0;  
+  left:0;  
+  right:0;  
+  display:flex;  
+  background:var(--bg);  
+  border-top:1px solid var(--border);  
+}  
+nav button{  
+  flex:1;  
+  border:none;  
+  padding:8px 0;  
+  font-size:11px;  
+}  
+nav span{  
+  font-size:18px;  
+  display:block;  
+}  
+  
+/* MOOD */  
+#moodEmoji{font-size:38px;margin-bottom:6px;}  
+input[type=range]{width:75%;}  
+#breathingBtn{margin-top:8px;display:none;width:fit-content;padding:6px 10px;border-radius:10px;}  
+  
+/* STUDY TIMER */  
+.studyCard{text-align:center;}  
+.timerCircle{  
+  width:110px;  
+  height:110px;  
+  border:2px solid var(--border);  
+  border-radius:50%;  
+  display:flex;  
+  align-items:center;  
+  justify-content:center;  
+  margin:10px auto;  
+}  
+.timerDisplay{font-size:26px;font-weight:600;}  
+.timerControls{display:flex;gap:10px;justify-content:center;}  
+  
+/* ASSIGNMENTS */  
+.assignmentRow{  
+  display:flex;  
+  gap:8px;  
+  margin-top:8px;  
+  align-items:center;  
+}  
+.assignmentRow button{  
+  cursor:pointer;  
+}/* =========================  
+   BIG GAMES  
+========================= */  
+  
+.game{margin-top:12px}  
+/* ===== TIC TAC TOE (BOX STYLE) ===== */  
+  
+.tic-grid{  
+  display:grid;  
+  grid-template-columns:repeat(3,100px);  
+  gap:8px;  
+  justify-content:center;  
+  margin:16px 0;  
+}  
+  
+.tic-grid button{  
+  width:100px;  
+  height:100px;  
+  font-size:40px;  
+  border-radius:12px;  
+  border:2px solid var(--border);  
+  background:var(--card);  
+}  
+  
+.difficulty{  
+  text-align:center;  
+  margin-bottom:10px;  
+}  
+  
+.difficulty select{  
+  padding:6px;  
+}  
+  #reactionResult{  
+  animation:fadeUp .4s ease;  
+}  
+  
+@keyframes fadeUp{  
+  from{opacity:0;transform:translateY(20px)}  
+  to{opacity:1;transform:translateY(0)}  
+}  
+  
+  
+/* SCOREBOARD */  
+.scoreboard{  
+  display:flex;  
+  justify-content:space-around;  
+  margin-bottom:10px;  
+  font-size:14px;  
+}  
+  
+/* BIG PUZZLE */  
+.puzzle-grid{  
+  display:grid;  
+  grid-template-columns:repeat(3,90px);  
+  gap:6px;  
+  justify-content:center;  
+  margin:12px 0;  
+}  
+.puzzle-grid button{  
+  width:90px;  
+  height:90px;  
+  font-size:22px;  
+}  
+  
+/* PROFILE */  
+.scheduleRow{  
+  display:grid;  
+  grid-template-columns:60px 1fr;  
+  gap:10px;  
+  margin-bottom:10px;  
+}  
+.calendar{  
+  margin-top:10px;  
+}  
+  
+.calendarHeader{  
+  display:flex;  
+  justify-content:space-between;  
+  align-items:center;  
+  margin-bottom:10px;  
+}  
+  
+.calendarHeader button{  
+  width:36px;  
+  height:36px;  
+  border-radius:50%;  
+  font-size:18px;  
+}  
+  
+.calendarGrid{  
+  display:grid;  
+  grid-template-columns:repeat(7,1fr);  
+  gap:6px;  
+  text-align:center;  
+}  
+  
+.calendarDays span{  
+  font-size:12px;  
+  color:var(--muted);  
+}  
+  
+.calendarGrid div{  
+  padding:10px 0;  
+  border-radius:10px;  
+  border:1px solid var(--border);  
+  font-size:13px;  
+}  
+  
+.calendarGrid .today{  
+  border-color:var(--accent);  
+  color:var(--accent);  
+  font-weight:600;  
+}  
+  
+.calendarGrid .inactive{  
+  opacity:0.3;  
+}  
+  
+  
+/* BREATHING PROGRESS – inside card */  
+.resetCard{  
+  position:relative;  
+}  
+  
+#breathProgress{  
+  position:absolute;  
+  bottom:12px;  
+  right:14px;  
+  font-size:14px;  
+  color:var(--accent);  
+}  
+  /* =========================
+   STUDY COMPLETE MODAL
+========================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+  backdrop-filter:blur(4px);
+}
+
+.modal.hidden{
+  display:none;
+}
+
+.modalCard{
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:22px;
+  width:85%;
+  max-width:320px;
+  text-align:center;
+  animation:pop .3s ease;
+}
+
+.modalCard h2{
+  margin:0 0 10px;
+}
+
+.modalCard p{
+  font-size:14px;
+  color:var(--muted);
+}
+
+.modalStats{
+  margin:14px 0;
+  display:flex;
+  justify-content:space-around;
+  font-size:14px;
+}
+
+.modalCard button{
+  width:100%;
+  margin-top:10px;
+  background:var(--accent);
+  color:#020617;
+  font-weight:600;
+}
+
+@keyframes pop{
+  from{transform:scale(.9);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+  .scheduleHint{
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:12px;
+  opacity:0.8;
+}
+  
+</style>
+</head>  
+<body> 
+  <header>  
+  <h2>MindSpark</h2>  
+<span style="cursor:pointer" onclick="show('settings')">⚙️</span>  
+</header>  <!-- HOME -->  <section id="home" class="active">  
+  <div class="card">  
+    <div id="moodEmoji">😐</div>  
+    <input type="range" min="0" max="4" value="3" id="moodSlider">  
+    <p id="moodText">Neutral mood</p>  
+    <button id="breathingBtn" onclick="show('reset')">Do breathing exercises</button>  
+  </div>   
+  <div class="card">
+  <h3>Daily Motivation</h3>
+  <p id="motivationText">Discipline builds the future, motivation can't.</p>
+</div>
+
+<div class="card">
+  <h3>Quick Study Tip</h3>
+  <p id="tipText">Active recall beats passive reading every time.</p>
+</div>
+</section>  <!-- STUDY -->  <section id="study">  
+  <div class="card studyCard">  
+    <h3>Study Session</h3>  
+    <div class="timerCircle" onclick="toggleTimer()">
+  <span class="timerDisplay">25:00</span>
+</div>
+<p style="font-size:12px;color:var(--muted);text-align:center;">
+  Tap time to pause / resume
+</p>
+    <div class="timerControls">  
+      <select id="studyDuration" onchange="setDuration()">  
+        <option value="600">10 min</option>  
+        <option value="1500" selected>25 min</option>  
+        <option value="1800">30 min</option>  
+        <option value="3600">1 hour</option>  
+        <option value="5400">1 hour 30</option>  
+      </select>  
+      <button id="startStudy" onclick="startTimer()">Start</button>  
+    </div>  
+  </div>    <div class="card">  
+    <h3>Assignments</h3>  
+    <div class="assignmentRow">  
+      <input type="text" id="taskInput" placeholder="Assignment title">  
+      <input type="date" id="taskDate">  
+    </div>  
+    <button style="margin-top:10px" onclick="addTask()">Add Assignment</button>  
+    <div id="tasks" style="margin-top:10px"></div>  
+  </div>  
+</section>  <!-- RESET -->  <section id="reset">  
+ <div class="card resetCard">  
+    <h3>Mental Reset</h3>  
+    <p id="breathText" style="font-size:26px;text-align:center;color:var(--text)">Ready</p>  
+    <button onclick="startBreathing()">Start Breathing</button>  
+    <div id="breathProgress">1/5</div>  
+  </div>    <div class="card">  
+  <h3>Games</h3>    <div style="display:flex;gap:8px;margin-bottom:12px">  
+    <button onclick="showGame('tic')">Tic Tac Toe</button>  
+    <button onclick="showGame('reaction')">Reaction</button>  
+    <button onclick="showGame('puzzle')">Puzzle</button>  
+  </div>    <div id="tic" class="game">  
+  <div class="difficulty">  
+    Difficulty:  
+    <select id="difficulty">  
+      <option value="easy">Easy</option>  
+      <option value="medium">Medium</option>  
+      <option value="impossible">Impossible</option>  
+    </select>  
+  </div>    <div class="scoreboard">  
+    <div>🧑‍🦱 <span id="pScore">0</span></div>  
+    <div>🤝 <span id="dScore">0</span></div>  
+    <div>🖥️ <span id="cScore">0</span></div>  
+  </div>    <div class="tic-grid">  
+    <button onclick="playerMove(0)"></button>  
+    <button onclick="playerMove(1)"></button>  
+    <button onclick="playerMove(2)"></button>  
+    <button onclick="playerMove(3)"></button>  
+    <button onclick="playerMove(4)"></button>  
+    <button onclick="playerMove(5)"></button>  
+    <button onclick="playerMove(6)"></button>  
+    <button onclick="playerMove(7)"></button>  
+    <button onclick="playerMove(8)"></button>  
+  </div>    <p id="ticStatus">Your turn</p>  
+  <button onclick="resetTic()">Restart</button>  
+</div>    <div id="reaction" class="game" style="display:none">  
+  <p>Time left: <span id="timeLeft">10</span>s</p>  
+  <p>Taps: <span id="tapCount">0</span></p>    <div id="tapCircle"  
+       style="width:120px;height:120px;border-radius:50%;  
+       background:blue;margin:20px auto;display:flex;  
+       align-items:center;justify-content:center;color:white;  
+       font-size:18px"  
+       onclick="tap()">  
+       TAP  
+  </div>  
+    <div id="reactionResult" class="card" style="display:none;text-align:center">  
+  <h3>Time’s Up ⏱️</h3>  
+  <p>Total taps: <strong id="finalTaps">0</strong></p>  
+  <p>Speed: <strong id="tapSpeed">0</strong> taps/sec</p>  
+  <button onclick="startTapGame()">Play Again</button>  
+</div>  <button onclick="startTapGame()">Start</button>
+
+</div>    <!-- PUZZLE -->    <div id="puzzle" class="game" style="display:none">  
+    <p>Moves: <span id="moveCount">0</span></p>  
+    <div class="puzzle-grid" id="puzzleGrid"></div>  
+    <button onclick="resetPuzzle()">Shuffle</button>  
+  </div>  
+</div>  
+</section>  <!-- PROFILE --> 
+  <!-- SETTINGS -->
+<section id="settings">
+  <div class="card">
+    <h3>Help & About</h3>
+
+    <p>
+      <strong>MindSpark</strong> is a focus and discipline companion.
+      It is not a learning platform and it does not teach subjects directly.
+    </p>
+
+    <p>
+      You study outside the app — with your books, notes, videos, or classes.
+      MindSpark helps you <strong>stay focused, consistent, and calm</strong>
+      while you do that work.
+    </p>
+
+    <p>
+      Use MindSpark to:
+    </p>
+
+    <ul style="color:var(--muted); padding-left:18px;">
+      <li>Track focused study sessions</li>
+      <li>Build daily study streaks 🔥</li>
+      <li>Manage assignments and deadlines</li>
+      <li>Reduce stress with breathing resets</li>
+      <li>Train focus with short mental games</li>
+    </ul>
+
+    <p>
+      MindSpark does not replace studying.
+      It supports the habit of showing up and staying disciplined.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>How to Use MindSpark</h3>
+
+    <p>
+      1. Decide what you will study <em>before</em> opening the app.
+    </p>
+    <p>
+      2. Start a study timer and focus on your real materials.
+    </p>
+    <p>
+      3. When finished, your streak is saved automatically.
+    </p>
+    <p>
+      4. Use Mental Reset when stressed or distracted.
+    </p>
+  </div>
+</section>
+  <section id="profile">  
+  <div class="card">  
+    <h3>Weekly Study Schedule</h3>  
+    <div class="scheduleHint">
+  eg: physics; friction
+</div>  
+    <div class="scheduleRow"><strong>Mon</strong><input></div>  
+    <div class="scheduleRow"><strong>Tue</strong><input></div>  
+    <div class="scheduleRow"><strong>Wed</strong><input></div>  
+    <div class="scheduleRow"><strong>Thu</strong><input></div>  
+    <div class="scheduleRow"><strong>Fri</strong><input></div>  
+    <div class="scheduleRow"><strong>Sat</strong><input></div>  
+    <div class="scheduleRow"><strong>Sun</strong><input></div>  
+  </div>    <div class="card">  
+  <h3>Study Streak</h3>    <div class="calendar">  
+    <div class="calendarHeader">  
+      <button onclick="changeMonth(-1)">‹</button>  
+      <span id="monthYear"></span>  
+      <button onclick="changeMonth(1)">›</button>  
+    </div>  <div class="calendarGrid calendarDays">  
+  <span>Mon</span><span>Tue</span><span>Wed</span>  
+  <span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>  
+</div>  
+
+<div id="calendarDates" class="calendarGrid"></div>
+
+  </div>  
+</div>  
+</section>  <nav>  
+  <button onclick="show('home')"><span>🏠</span>Home</button>  
+  <button onclick="show('study')"><span>📚</span>Study</button>  
+  <button onclick="show('reset')"><span>🧘</span>Reset</button>  
+  <button onclick="show('profile')"><span>👤</span>Profile</button>  
+</nav> 
+  <!-- STUDY COMPLETE MODAL -->
+<div id="studyCompleteModal" class="modal hidden">
+  <div class="modalCard">
+    <h2>🎉 Session Complete</h2>
+    <p>You stayed focused and finished your study session.</p>
+
+    <div class="modalStats">
+      <div>⏱️ <span id="sessionTime">25 min</span></div>
+      <div>🔥 Streak updated</div>
+    </div>
+
+    <button onclick="closeStudyModal()">Done</button>
+    <audio id="timerSound" preload="auto">
+  <source src="alarm.mp3" type="audio/mpeg">
+</audio>
+  </div>
+</div>
+  <script>  
+/* =========================
+STUDY STREAK / CALENDAR
+========================= */
+let currentDate = new Date();
+let streakDays = JSON.parse(localStorage.getItem("streakDays")) || [];
+
+const monthYear = document.getElementById("monthYear");
+const calendarDates = document.getElementById("calendarDates");
+
+const monthNames = [
+  "January","February","March","April","May","June",
+  "July","August","September","October","November","December"
+];
+
+function renderCalendar(){
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+
+  monthYear.textContent = `${monthNames[month]} ${year}`;
+  calendarDates.innerHTML = "";
+
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
+
+  let startDay = firstDay.getDay();
+  startDay = startDay === 0 ? 6 : startDay - 1; // Monday first
+
+  // empty cells before month starts
+  for(let i=0; i<startDay; i++){
+    const empty = document.createElement("div");
+    empty.className = "inactive";
+    calendarDates.appendChild(empty);
+  }
+
+  for(let d=1; d<=lastDay.getDate(); d++){
+    const cell = document.createElement("div");
+    cell.textContent = d;
+
+    const today = new Date();
+    const todayKey = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+
+    const cellKey = `${year}-${month}-${d}`;
+    if(streakDays.includes(cellKey)) {
+      cell.textContent = "🔥";
+      cell.style.color = "var(--streak)";
+      cell.style.fontWeight = "bold";
+    }
+
+    if(d === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+      cell.classList.add("today");
+    }
+
+    calendarDates.appendChild(cell);
+  }
+}
+
+function changeMonth(step){
+  currentDate.setMonth(currentDate.getMonth() + step);
+  renderCalendar();
+}
+
+renderCalendar();
+
+/* Call this when a study session completes */
+function saveStreakDay() {
+  const today = new Date();
+  const todayKey = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+  if(!streakDays.includes(todayKey)){
+    streakDays.push(todayKey);
+    localStorage.setItem("streakDays", JSON.stringify(streakDays));
+    renderCalendar();
+  }
+}
+    
+    
+    
+/* =========================  
+   NAVIGATION  
+========================= */  
+function show(id){  
+  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));  
+  document.getElementById(id).classList.add("active");  
+}  
+  
+/* =========================  
+   MOOD SLIDER  
+========================= */  
+const moods=[  
+  ["😡","Angry"],  
+  ["😢","Sad"],  
+  ["😨","Anxious"],  
+  ["😐","Neutral"],  
+  ["😀","Happy"]  
+];  
+const moodSlider = document.getElementById("moodSlider");  
+const moodEmoji = document.getElementById("moodEmoji");  
+const moodText = document.getElementById("moodText");  
+const breathingBtn = document.getElementById("breathingBtn");  
+  
+moodSlider.oninput = () => {  
+  const val = moods[moodSlider.value];  
+  moodEmoji.textContent = val[0];  
+  moodText.textContent = val[1] + " mood";  
+  breathingBtn.style.display = ["Angry","Sad","Anxious"].includes(val[1]) ? "inline-block" : "none";  
+};  
+  
+/* =========================  
+   STUDY TIMER  
+========================= */  
+let timerInterval = null;  
+let remainingSeconds = 1500;  
+let running = false;  
+const timerDisplay = document.querySelector(".timerDisplay");  
+const durationSelect = document.getElementById("studyDuration");  
+  
+function formatTime(sec){  
+  const m = Math.floor(sec/60).toString().padStart(2,"0");  
+  const s = (sec%60).toString().padStart(2,"0");  
+  return `${m}:${s}`;  
+}  
+  
+function setDuration(){
+ 
+  remainingSeconds = parseInt(durationSelect.value);
+  timerDisplay.textContent = formatTime(remainingSeconds);
+
+  localStorage.setItem("remainingSeconds", remainingSeconds);
+}
+function startTimer(){
+  // Stop any existing timer
+  if (timerInterval) clearInterval(timerInterval);
+
+  // Always restart from selected duration
+  remainingSeconds = parseInt(durationSelect.value);
+  timerDisplay.textContent = formatTime(remainingSeconds);
+
+  running = true;
+  lastTick = Date.now();
+
+  localStorage.setItem("remainingSeconds", remainingSeconds);
+  localStorage.setItem("timerRunning", "true");
+
+  timerInterval = setInterval(tick, 1000);
+}
+  /* =========================  
+   GAME SWITCH  
+========================= */  
+function showGame(id){  
+  document.querySelectorAll(".game").forEach(g=>g.style.display="none");  
+  document.getElementById(id).style.display="block";  
+}  
+  
+ let board = Array(9).fill("");  
+let playerScore=0, drawScore=0, computerScore=0; 
+let nextStarter = "X"; // X starts first game  
+const cells=document.querySelectorAll(".tic-grid button");  
+  
+function playerMove(i){  
+  if(board[i] || checkWin("X") || checkWin("O")) return;  
+  board[i]="X";  
+  cells[i].textContent="X";  
+  
+  if(endGame("X")) return;  
+  
+  setTimeout(computerMove,400);  
+}  
+  
+function computerMove(){  
+  let diff=document.getElementById("difficulty").value;  
+  let move;  
+  
+  if(diff==="easy"){  
+    move=randomMove();  
+  }  
+  else if(diff==="medium"){  
+    move=Math.random()<0.5 ? randomMove() : bestMove();  
+  }  
+  else{  
+    move=bestMove();  
+  }  
+  
+  if(move==null) return;  
+  board[move]="O";  
+  cells[move].textContent="O";  
+  
+  endGame("O");  
+}  
+  
+function randomMove(){  
+  let empty=board.map((v,i)=>v===""?i:null).filter(v=>v!==null);  
+  return empty[Math.floor(Math.random()*empty.length)];  
+}  
+  
+/* ===== IMPOSSIBLE AI (MINIMAX) ===== */  
+function bestMove(){  
+  let bestScore=-Infinity;  
+  let move=null;  
+  
+  board.forEach((v,i)=>{  
+    if(v===""){  
+      board[i]="O";  
+      let score=minimax(board,0,false);  
+      board[i]="";  
+      if(score>bestScore){  
+        bestScore=score;  
+        move=i;  
+      }  
+    }  
+  });  
+  return move;  
+}  
+  
+function minimax(b,depth,isMax){  
+  if(checkWin("O")) return 10-depth;  
+  if(checkWin("X")) return depth-10;  
+  if(b.every(v=>v)) return 0;  
+  
+  if(isMax){  
+    let best=-Infinity;  
+    b.forEach((v,i)=>{  
+      if(v===""){  
+        b[i]="O";  
+        best=Math.max(best,minimax(b,depth+1,false));  
+        b[i]="";  
+      }  
+    });  
+    return best;  
+  }else{  
+    let best=Infinity;  
+    b.forEach((v,i)=>{  
+      if(v===""){  
+        b[i]="X";  
+        best=Math.min(best,minimax(b,depth+1,true));  
+        b[i]="";  
+      }  
+    });  
+    return best;  
+  }  
+}  
+  
+function checkWin(p){  
+  const w=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];  
+  return w.some(c=>c.every(i=>board[i]===p));  
+}  
+  
+function endGame(p){  
+  if(checkWin(p)){
+  if(p==="X") playerScore++;
+  else computerScore++;
+
+  updateScore();
+  ticStatus.textContent = p==="X" ? "You win 🎉" : "Computer wins 🤖";
+
+  nextStarter = nextStarter === "X" ? "O" : "X";
+  return true;
+} 
+   
+if(board.every(v=>v)){
+  drawScore++;
+  updateScore();
+  ticStatus.textContent = "Draw 🤝";
+
+  nextStarter = nextStarter === "X" ? "O" : "X";
+  return true;
+}
+  return false;  
+}  
+  
+function resetTic(){
+  board.fill("");
+  cells.forEach(c=>c.textContent="");
+
+  if(nextStarter === "X"){
+    ticStatus.textContent = "Your turn";
+  } else {
+    ticStatus.textContent = "Computer starts 🤖";
+    setTimeout(computerMove, 500);
+  }
+}  
+  
+function updateScore(){  
+  pScore.textContent=playerScore;  
+  dScore.textContent=drawScore;  
+  cScore.textContent=computerScore;  
+}  
+/* =========================  
+   REACTION GAME  
+========================= */  
+  let taps=0;  
+let time=10;  
+let timer;  
+  
+function startTapGame(){  
+  taps=0;  
+  time=10;  
+  
+  tapCount.textContent=0;  
+  timeLeft.textContent=time;  
+  
+  document.getElementById("reactionResult").style.display="none";  
+  
+  clearInterval(timer);  
+  timer=setInterval(()=>{  
+    time--;  
+    timeLeft.textContent=time;  
+  
+    if(time===0){  
+      clearInterval(timer);  
+      showResult();  
+    }  
+  },1000);  
+}  
+  
+function tap(){  
+  if(time>0){  
+    taps++;  
+    tapCount.textContent=taps;  
+  }  
+}  
+  
+function showResult(){  
+  document.getElementById("finalTaps").textContent=taps;  
+  document.getElementById("tapSpeed").textContent=(taps/10).toFixed(1);  
+  document.getElementById("reactionResult").style.display="block";  
+}  
+  
+    
+  
+    
+/* =========================  
+   SLIDING PUZZLE + MOVES  
+========================= */  
+let puzzle=[], moves=0;  
+  
+function resetPuzzle(){  
+  puzzle=[1,2,3,4,5,6,7,8,""].sort(()=>Math.random()-0.5);  
+  moves=0;  
+  moveCount.textContent=moves;  
+  drawPuzzle();  
+}  
+  
+function drawPuzzle(){  
+  puzzleGrid.innerHTML="";  
+  puzzle.forEach((n,i)=>{  
+    const b=document.createElement("button");  
+    b.textContent=n;  
+    b.onclick=()=>movePuzzle(i);  
+    puzzleGrid.appendChild(b);  
+  });  
+}  
+  
+function movePuzzle(i){  
+  const e=puzzle.indexOf("");  
+  const valid=[i-1,i+1,i-3,i+3];  
+  if(valid.includes(e)){  
+    [puzzle[i],puzzle[e]]=[puzzle[e],puzzle[i]];  
+    moves++;  
+    moveCount.textContent=moves;  
+    drawPuzzle();  
+  }  
+}  
+  
+resetPuzzle();  
+  
+
+ 
+
+ function toggleTimer(){
+  if(!running && remainingSeconds > 0){
+    // START or RESUME
+    running = true;
+    lastTick = Date.now();
+    timerInterval = setInterval(tick, 1000);
+
+    localStorage.setItem("timerRunning", "true");
+    localStorage.setItem("remainingSeconds", remainingSeconds);
+  } 
+  else if(running){
+    // PAUSE
+    running = false;
+    clearInterval(timerInterval);
+
+    localStorage.setItem("timerRunning", "false");
+    localStorage.setItem("remainingSeconds", remainingSeconds);
+  }
+}
+  let lastTick = null;
+
+function tick(){
+  const now = Date.now();
+  const diff = Math.floor((now - lastTick) / 1000);
+
+  if(diff > 0){
+    remainingSeconds -= diff;
+    lastTick = now;
+
+if(remainingSeconds <= 0){
+  remainingSeconds = 0;
+  clearInterval(timerInterval);
+  running = false;
+
+  timerDisplay.textContent = "00:00";
+
+  localStorage.removeItem("timerRunning");
+  localStorage.removeItem("remainingSeconds");
+
+  playTimerSound();      // 🔔 STEP 4 — THIS WAS MISSING
+  saveStreakDay();       // 🔥 streak
+  showStudyComplete();   // 🎉 modal
+
+  return;
+}
+
+
+ 
+    timerDisplay.textContent = formatTime(remainingSeconds);
+    localStorage.setItem("remainingSeconds", remainingSeconds);
+  }
+}
+  function showStudyComplete(){
+  const modal = document.getElementById("studyCompleteModal");
+  const mins = Math.round(parseInt(durationSelect.value) / 60);
+  document.getElementById("sessionTime").textContent = `${mins} min`;
+  modal.classList.remove("hidden");
+}
+
+function closeStudyModal(){
+  document.getElementById("studyCompleteModal").classList.add("hidden");
+}
+ 
+  
+/* =========================  
+   ASSIGNMENTS SYSTEM  
+========================= */  
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];  
+const taskList = document.getElementById("tasks");  
+  
+function saveTasks(){  
+  localStorage.setItem("tasks", JSON.stringify(tasks));  
+}  
+  
+function addTask(){  
+  const title = document.getElementById("taskInput").value.trim();  
+  const date = document.getElementById("taskDate").value;  
+  if(!title || !date) return;  
+  tasks.push({title,date,done:false});  
+  document.getElementById("taskInput").value = "";  
+  document.getElementById("taskDate").value = "";  
+  saveTasks();  
+  renderTasks();  
+}  
+  
+function renderTasks(){  
+  taskList.innerHTML = "";  
+  tasks.forEach((task,index)=>{  
+    const row = document.createElement("div");  
+    row.className = "assignmentRow";  
+  
+    row.innerHTML = `  
+     <button onclick="toggleTask(${index})"
+  style="
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    background:${task.done?'var(--accent)':'transparent'};
+    color:${task.done?'#020617':'var(--text)'};
+    font-size:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+    line-height:1;
+  ">
+  ✔
+</button>
+      <div style="flex:1">  
+        <div style="text-decoration:${task.done?'line-through':'none'};opacity:${task.done?'0.6':'1'};font-weight:600">  
+          ${task.title}  
+        </div>  
+        <div style="font-size:12px;color:var(--muted)">  
+          ${task.date.split("-").reverse().join("-")} <!-- shows DD-MM-YYYY -->              </div>  
+      </div>  
+      <button onclick="editTask(${index})" style="margin-left:6px;">✏️</button>  
+      <button onclick="deleteTask(${index})" style="margin-left:4px;">🗑️</button>  
+    `;  
+    taskList.appendChild(row);  
+  });  
+}  
+  
+function toggleTask(i){  
+  tasks[i].done = !tasks[i].done;  
+  saveTasks();  
+  renderTasks();  
+}  
+ function editTask(i){  
+  document.getElementById("taskInput").value = tasks[i].title;  
+  document.getElementById("taskDate").value = tasks[i].date;  
+  tasks.splicetasks.splice(i,1);  
+  saveTasks();  
+  renderTasks();  
+}  
+  
+function deleteTask(i){  
+  tasks.splice(i,1);  
+  saveTasks();  
+  renderTasks();  
+}  
+  
+renderTasks();  
+  
+/* =========================  
+   BREATHING  
+========================= */  
+let cycle = 0;  
+let phase = "in";  
+let breathInterval = null;  
+  
+function startBreathing(){  
+  clearInterval(breathInterval);  
+  cycle = 0;  
+  phase = "in";  
+  
+  const text = document.getElementById("breathText");  
+  const progress = document.getElementById("breathProgress");progress.textContent = "0/5";  
+  text.textContent = "Breathe In";  
+  
+  breathInterval = setInterval(() => {  
+    if (phase === "in") {  
+      text.textContent = "Breathe Out";  
+      phase = "out";  
+    } else {  
+      cycle++;  
+      progress.textContent = `${cycle}/5`;  
+  
+      if (cycle >= 5) {  
+        clearInterval(breathInterval);  
+        text.textContent = "Done 😌";  
+        return;  
+      }  
+  
+      text.textContent = "Breathe In";  
+      phase = "in";  
+    }  
+  }, 2000);  
+}  
+  /* =========================
+   MOTIVATIONS & STUDY TIPS
+   (Persistent – does NOT reset)
+========================= */
+
+const motivations = [
+  "You don’t need to rush. You just need to stay consistent.",
+  "Progress happens when you keep going, even on slow or difficult days.",
+  "One focused study session is better than hours of distraction.",
+  "Clarity comes from doing the work, not from overthinking it.",
+  "Showing up imperfectly is better than not showing up at all.",
+  "Small improvements repeated daily lead to real transformation.",
+  "Your future self benefits from the effort you make right now.",
+  "Consistency builds confidence more than motivation ever will.",
+  "Take this moment seriously. It won’t come back.",
+  "You are allowed to take breaks, but not to give up.",
+  "Focus is not about doing more, it’s about doing what matters.",
+  "Staying present with your task is already a form of discipline.",
+  "Slow progress is still progress when you don’t stop.",
+  "Your effort today reduces stress tomorrow.",
+  "Discipline grows quietly through repetition.",
+  "The calm mind finishes what it starts.",
+  "You don’t need pressure, you need persistence.",
+  "Every focused minute strengthens your habits.",
+  "Progress feels invisible until it compounds.",
+  "Consistency beats intensity in the long run."
+];
+
+
+const studyTips = [
+  "Before you start studying, decide exactly what you want to understand or finish. Clear goals reduce mental stress and improve focus.",
+  "Study with intention, not duration. Thirty minutes of deep focus is more effective than two distracted hours.",
+  "If a topic feels difficult, slow down and break it into smaller ideas instead of forcing yourself to rush through it.",
+  "After studying a concept, close your notes and explain it out loud as if you are teaching someone else.",
+  "Start each study session by reviewing what you learned last time to strengthen memory connections.",
+  "When your mind drifts, gently bring it back to the task instead of criticizing yourself. Awareness restores focus.",
+  "Use pen and paper for complex ideas. Writing helps your brain process information more deeply.",
+  "Study the hardest subject when your energy is highest, not when you are already tired.",
+  "Remove distractions before you start so you don’t have to fight them during the session.",
+  "End each study session by summarizing the main ideas in your own words.",
+  "Consistency matters more than perfection. Showing up daily builds real progress over time.",
+  "If you feel overwhelmed, reduce the task until it feels manageable, then begin immediately.",
+  "Take short, intentional breaks instead of long unplanned ones to keep your momentum.",
+  "Revisit important topics multiple times across days instead of cramming them in one session.",
+  "Focus on understanding why something works, not just memorizing how it works.",
+  "Create simple questions from your notes and test yourself regularly.",
+  "Study in a clean, quiet environment to reduce mental fatigue.",
+  "Before you start studying, put your phone on silent or out of reach so it doesn’t compete for your attention.",
+  "When distractions appear, write them down and return to them later instead of switching tasks immediately.",
+  "If stress builds up, pause for three slow breaths before continuing. Calm focus improves learning.",
+  "Studying while stressed reduces efficiency, so slow your pace and focus on understanding, not speed.",
+  "Track your study sessions so you can see your effort, not just your results.",
+  "Finish each session knowing what your next step will be. Clarity makes starting easier next time."
+];
+
+/* Load saved indexes (or start from 0) */
+let motivationIndex = parseInt(localStorage.getItem("motivationIndex")) || 0;
+let tipIndex = parseInt(localStorage.getItem("tipIndex")) || 0;
+
+const motivationEl = document.getElementById("motivationText");
+const tipEl = document.getElementById("tipText");
+
+/* Show immediately on app load */
+motivationEl.textContent = motivations[motivationIndex];
+tipEl.textContent = studyTips[tipIndex];
+
+/* Change motivation every 30 seconds */
+setInterval(() => {
+  motivationIndex = (motivationIndex + 1) % motivations.length;
+  motivationEl.textContent = motivations[motivationIndex];
+  localStorage.setItem("motivationIndex", motivationIndex);
+}, 30000);
+
+/* Change study tip every 60 seconds */
+setInterval(() => {
+  tipIndex = (tipIndex + 1) % studyTips.length;
+  tipEl.textContent = studyTips[tipIndex];
+  localStorage.setItem("tipIndex", tipIndex);
+}, 60000);
+  
+(function restoreTimer(){
+  const savedRemaining = parseInt(localStorage.getItem("remainingSeconds"));
+  const wasRunning = localStorage.getItem("timerRunning") === "true";
+
+  if(!isNaN(savedRemaining)){
+    remainingSeconds = savedRemaining;
+    timerDisplay.textContent = formatTime(remainingSeconds);
+  }
+
+  if(wasRunning && remainingSeconds > 0){
+    running = true;
+    lastTick = Date.now();
+    timerInterval = setInterval(tick, 1000);
+  }
+})();
+  function playTimerSound() {
+  const sound = document.getElementById("timerSound");
+  if (sound) {
+    sound.currentTime = 0;
+    sound.play().catch(() => {
+      console.log("Sound blocked until user interaction");
+    });
+  }
+}
+  let audioUnlocked = false;
+
+function unlockAudio(){
+  if(audioUnlocked) return;
+
+  const sound = document.getElementById("timerSound");
+  sound.volume = 0;
+  sound.play().then(() => {
+    sound.pause();
+    sound.currentTime = 0;
+    sound.volume = 1;
+    audioUnlocked = true;
+    console.log("🔓 Audio unlocked");
+  }).catch(()=>{});
+}
+  
+</script>
+</body>
+  </html>
+      

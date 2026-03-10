@@ -519,7 +519,14 @@ contact the developer at:
     </div>  <div class="calendarGrid calendarDays">  
   <span>Mon</span><span>Tue</span><span>Wed</span>  
   <span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>  
-</div>  
+</div> 
+    <div class="card">
+  <h3>Study Statistics</h3>
+  <p>Total Sessions: <span id="totalSessions">0</span></p>
+  <p>Total Study Time: <span id="totalTime">0</span> minutes</p>
+
+  <button onclick="exportStats()">Export Study Stats 📊</button>
+    </div>
 
 <div id="calendarDates" class="calendarGrid"></div>
 
@@ -548,7 +555,37 @@ contact the developer at:
 </audio>
   </div>
 </div>
-  <script>  
+  <script> 
+    function updateStats(){
+  document.getElementById("totalSessions").textContent =
+    localStorage.getItem("totalSessions") || 0;
+
+  document.getElementById("totalTime").textContent =
+    localStorage.getItem("totalTime") || 0;
+}
+
+function exportStats(){
+
+  let sessions = localStorage.getItem("totalSessions") || 0;
+  let time = localStorage.getItem("totalTime") || 0;
+
+  let data =
+`MindSpark Study Stats
+
+Total Sessions: ${sessions}
+Total Study Time: ${time} minutes
+`;
+
+  let blob = new Blob([data], {type:"text/plain"});
+  let url = URL.createObjectURL(blob);
+
+  let a = document.createElement("a");
+  a.href = url;
+  a.download = "mindspark-study-stats.txt";
+  a.click();
+}
+
+updateStats();
 /* =========================
 STUDY STREAK / CALENDAR
 ========================= */

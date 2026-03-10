@@ -520,18 +520,23 @@ contact the developer at:
   <span>Mon</span><span>Tue</span><span>Wed</span>  
   <span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>  
 </div> 
+
+
+<div id="calendarDates" class="calendarGrid"></div>
+
+  </div>  
+</div>
     <div class="card">
+  <h3>Current Streak</h3>
+  <p id="currentStreak">Streak: 0 🔥</p>
+    </div>
+        <div class="card">
   <h3>Study Statistics</h3>
   <p>Total Sessions: <span id="totalSessions">0</span></p>
   <p>Total Study Time: <span id="totalTime">0</span> minutes</p>
 
   <button onclick="exportStats()">Export Study Stats 📊</button>
-    </div>
-
-<div id="calendarDates" class="calendarGrid"></div>
-
-  </div>  
-</div>  
+        </div>
 </section>  <nav>  
   <button onclick="show('home')"><span>🏠</span>Home</button>  
   <button onclick="show('study')"><span>📚</span>Study</button>  
@@ -727,6 +732,7 @@ function startTimer(){
 
   localStorage.setItem("remainingSeconds", remainingSeconds);
   localStorage.setItem("timerRunning", "true");
+  completeSession(); // after the timer finishes
 
   timerInterval = setInterval(tick, 1000);
 }
@@ -1250,6 +1256,30 @@ function unlockAudio(){
     audioUnlocked = true;
     console.log("🔓 Audio unlocked");
   }).catch(()=>{});
+}
+    // Initialize current streak from localStorage
+let currentStreak = parseInt(localStorage.getItem("currentStreak")) || 0;
+document.getElementById("currentStreak").textContent = `Streak: ${currentStreak} 🔥`;
+
+// Call this function whenever a study session is completed
+function completeSession(){
+  // Increase the streak
+  currentStreak++;
+  localStorage.setItem("currentStreak", currentStreak);
+  
+  // Update display
+  document.getElementById("currentStreak").textContent = `Streak: ${currentStreak} 🔥`;
+
+  // Update study stats (optional if you also want session/time tracking)
+  let totalSessions = parseInt(localStorage.getItem("totalSessions") || 0) + 1;
+  localStorage.setItem("totalSessions", totalSessions);
+
+  let sessionTime = parseInt(document.querySelector(".timerDisplay").textContent.split(":")[0]) || 25;
+  let totalTime = parseInt(localStorage.getItem("totalTime") || 0) + sessionTime;
+  localStorage.setItem("totalTime", totalTime);
+
+  // Refresh stats display
+  updateStats();
 }
   
 </script>

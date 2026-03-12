@@ -523,10 +523,8 @@ contact the developer at:
 
 
 <div id="calendarDates" class="calendarGrid"></div>
-<div class="card">
-<h3>Current Streak</h3>
-<p id="streakDisplay">Streak: 0 🔥</p>
-</div>
+
+
   </div>  
 
     
@@ -1238,20 +1236,7 @@ function unlockAudio(){
     audioUnlocked = true;
     console.log("🔓 Audio unlocked");
   }).catch(()=>{});
-} 
-    let streak = parseInt(localStorage.getItem("streak")) || 0;
 
-function updateStreak(){
-  document.getElementById("streakDisplay").textContent =
-  "Streak: " + streak + " 🔥";
-}
-
-updateStreak();
-
-function completeSession(){
-  streak++;
-  localStorage.setItem("streak", streak);
-  updateStreak();
 }
 </script>
 </body>

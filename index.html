@@ -543,7 +543,7 @@ contact the developer at:
 
     <div class="modalStats">
       <div>⏱️ <span id="sessionTime">25 min</span></div>
-      <div>🔥 Streak updated</div>
+<div>✅ Session saved</div>
     </div>
 
     <button onclick="closeStudyModal()">Done</button>
@@ -617,33 +617,11 @@ function changeMonth(step){
 
 renderCalendar();
 
-/* Call this when a study session completes */
-);
+
   
-function saveStreakDay() {
 
-  const today = new Date();
-  const todayKey = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+  
 
-  if(!streakDays.includes(todayKey)){
-
-    streakDays.push(todayKey);
-    localStorage.setItem("streakDays", JSON.stringify(streakDays));
-
-    // 🔥 update streak number
-    let streak = parseInt(localStorage.getItem("streak")) || 0;
-    streak++;
-
-    localStorage.setItem("streak", streak);
-
-    const display = document.getElementById("streakDisplay");
-    if(display){
-      display.textContent = "Streak: " + streak + " 🔥";
-    }
-
-    renderCalendar();
-  }
-}
     
     
     
@@ -978,8 +956,7 @@ if(remainingSeconds <= 0){
   localStorage.removeItem("timerRunning");
   localStorage.removeItem("remainingSeconds");
 
-  playTimerSound();      // 🔔 STEP 4 — THIS WAS MISSING
-  saveStreakDay();       // 🔥 streak
+  playTimerSound();      // 🔔 STEP 4 — THIS WAS MISSING       
   showStudyComplete();   // 🎉 modal
 
   return;

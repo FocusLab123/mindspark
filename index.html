@@ -955,7 +955,8 @@ if(remainingSeconds <= 0){
   localStorage.removeItem("timerRunning");
   localStorage.removeItem("remainingSeconds");
 
-  playTimerSound();      // 🔔 STEP 4 — THIS WAS MISSING       
+  playTimerSound();      // 🔔 STEP 4 — THIS WAS MISSING 
+  savestreakDay();
   showStudyComplete();   // 🎉 modal
 
   return;

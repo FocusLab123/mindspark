@@ -690,8 +690,7 @@ function startTimer(){
 
   localStorage.setItem("remainingSeconds", remainingSeconds);
   localStorage.setItem("timerRunning", "true");
-  completeSession(); // after the timer finishes
-
+  
   timerInterval = setInterval(tick, 1000);
 }
   /* =========================  
@@ -1047,7 +1046,7 @@ function toggleTask(i){
  function editTask(i){  
   document.getElementById("taskInput").value = tasks[i].title;  
   document.getElementById("taskDate").value = tasks[i].date;  
-  tasks.splicetasks.splice(i,1);  
+  tasks.splice(i,1);  
   saveTasks();  
   renderTasks();  
 }  
@@ -1080,7 +1079,8 @@ function startBreathing(){
     if (phase === "in") {  
       text.textContent = "Breathe Out";  
       phase = "out";  
-    } else {  
+    } 
+    else {  
       cycle++;  
       progress.textContent = `${cycle}/5`;  
   
@@ -1175,7 +1175,7 @@ setInterval(() => {
   localStorage.setItem("tipIndex", tipIndex);
 }, 60000);
   
-(function restoreTimer(){
+function restoreTimer(){
   const savedRemaining = parseInt(localStorage.getItem("remainingSeconds"));
   const wasRunning = localStorage.getItem("timerRunning") === "true";
 
@@ -1189,7 +1189,8 @@ setInterval(() => {
     lastTick = Date.now();
     timerInterval = setInterval(tick, 1000);
   }
-})();
+}
+    restoreTimer();
   function playTimerSound() {
   const sound = document.getElementById("timerSound");
   if (sound) {

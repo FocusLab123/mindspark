@@ -559,6 +559,16 @@ STUDY STREAK / CALENDAR
 ========================= */
 let currentDate = new Date();
 let streakDays = JSON.parse(localStorage.getItem("streakDays")) || [];
+    function saveStreakDay(){
+  const today = new Date();
+  const todayKey = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+
+  if(!streakDays.includes(todayKey)){
+    streakDays.push(todayKey);
+    localStorage.setItem("streakDays", JSON.stringify(streakDays));
+    renderCalendar();
+  }
+    }
 
 const monthYear = document.getElementById("monthYear");
 const calendarDates = document.getElementById("calendarDates");
@@ -956,7 +966,7 @@ if(remainingSeconds <= 0){
   localStorage.removeItem("remainingSeconds");
 
   playTimerSound();      // 🔔 STEP 4 — THIS WAS MISSING 
-  savestreakDay();
+saveStreakDay();
   showStudyComplete();   // 🎉 modal
 
   return;
